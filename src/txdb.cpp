@@ -333,7 +333,7 @@ bool CBlockTreeDB::WriteBatchSync(const std::vector<std::pair<int, const CBlockF
     return WriteBatch(batch, true);
 }
 
-bool CCoinsViewDB::ValidateNameDB(ChainstateManager& chainman) const
+bool CCoinsViewDB::ValidateNameDB(ChainstateManager& chainman, const std::function<void()>& interruption_point) const
 {
     LogPrintf("ValidateNameDB.\n");
 
@@ -362,7 +362,7 @@ bool CCoinsViewDB::ValidateNameDB(ChainstateManager& chainman) const
 
     for (; pcursor->Valid(); pcursor->Next())
     {
-        boost::this_thread::interruption_point();
+        interruption_point();
         char chType;
         if (!pcursor->GetKey(chType))
             continue;
