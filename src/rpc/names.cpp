@@ -1089,9 +1089,9 @@ name_checkdb ()
 {
 NodeContext& node = EnsureNodeContext (request.context);
   LOCK (cs_main);
-  auto& coinsTip = chainman.ActiveChainstate ().CoinsTip ();
+  auto& coinsTip = g_chainman.ActiveChainstate ().CoinsTip ();
   coinsTip.Flush ();
-return coinsTip.ValidateNameDB (chainman, node.rpc_interruption_point);
+return coinsTip.ValidateNameDB (g_chainman, node.rpc_interruption_point);
 }
   );
 }
